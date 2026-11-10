@@ -122,6 +122,18 @@ def play_quiz(quizzes):
     print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
     print("=" * 40)
     print()
+def list_quizzes(quizzes):
+    if len(quizzes) == 0:
+        print("⚠️ 등록된 퀴즈가 없습니다.\n")
+        return
+
+    print(f"\n📋 등록된 퀴즈 목록 (총 {len(quizzes)}개)\n")
+    print("-" * 40)
+    for i, quiz in enumerate(quizzes, 1):
+        print(f"[{i}] {quiz.question}")
+    print("-" * 40)
+    print()
+
 
 def main():
     quizzes = create_default_quizzes()
@@ -136,6 +148,10 @@ def main():
 
         if choice == 1:
             play_quiz(quizzes)
+            continue
+
+        if choice == 3:
+            list_quizzes(quizzes)
             continue
 
         print(f"(준비 중) {choice}번 메뉴를 선택했습니다.\n")
