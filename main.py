@@ -98,8 +98,7 @@ def get_number(prompt, low, high):
 
         return number
 
-
-def play_quiz(quizzes):
+def play_quiz(quizzes, best):
     if len(quizzes) == 0:
         print("⚠️ 등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해 주세요.\n")
         return
@@ -120,8 +119,16 @@ def play_quiz(quizzes):
     score = correct * 100 // total
     print("=" * 40)
     print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+
+    if best["score"] is None or score > best["score"]:
+        best["score"] = score
+        best["correct"] = correct
+        best["total"] = total
+        print("🎉 새로운 최고 점수입니다!")
+
     print("=" * 40)
     print()
+
 
 def get_text(prompt):
     while True:
@@ -147,6 +154,7 @@ def add_quiz(quizzes):
     quizzes.append(Quiz(question, choices, answer))
     print("\n✅ 퀴즈가 추가되었습니다!\n")
 
+
 def list_quizzes(quizzes):
     if len(quizzes) == 0:
         print("⚠️ 등록된 퀴즈가 없습니다.\n")
@@ -159,8 +167,18 @@ def list_quizzes(quizzes):
     print("-" * 40)
     print()
 
+
+def show_best_score(best):
+    if best["score"] is None:
+        print("\n⚠️ 아직 퀴즈를 풀지 않았습니다. 먼저 퀴즈를 풀어 보세요.\n")
+        return
+
+    print(f"\n🏆 최고 점수: {best['score']}점 ({best['total']}문제 중 {best['correct']}문제 정답)\n")
+
+
 def main():
     quizzes = create_default_quizzes()
+    best = {"score": None, "correct": 0, "total": 0}
 
     while True:
         show_menu()
@@ -171,12 +189,11 @@ def main():
             break
 
         if choice == 1:
-            play_quiz(quizzes)
+            play_quiz(quizzes, best)
             continue
 
         if choice == 2:
             add_quiz(quizzes)
-            
             continue
 
         if choice == 3:
@@ -184,7 +201,10 @@ def main():
             input("Enter 키를 누르면 메뉴로 돌아갑니다...")
             continue
 
-        print(f"(준비 중) {choice}번 메뉴를 선택했습니다.\n")
+        if choice == 4:
+            show_best_score(best)
+            input("Enter 키를 누르면 메뉴로 돌아갑니다...")
+            continue
 
 
 if __name__ == "__main__":
