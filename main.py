@@ -78,8 +78,54 @@ def get_menu_choice():
 
         return number
 
+def get_number(prompt, low, high):
+    while True:
+        text = input(prompt).strip()
+
+        if text == "":
+            print(f"⚠️ 아무것도 입력하지 않았습니다. {low}-{high} 사이의 숫자를 입력하세요.")
+            continue
+
+        try:
+            number = int(text)
+        except ValueError:
+            print(f"⚠️ 잘못된 입력입니다. {low}-{high} 사이의 숫자를 입력하세요.")
+            continue
+
+        if number < low or number > high:
+            print(f"⚠️ 잘못된 입력입니다. {low}-{high} 사이의 숫자를 입력하세요.")
+            continue
+
+        return number
+
+
+def play_quiz(quizzes):
+    if len(quizzes) == 0:
+        print("⚠️ 등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해 주세요.\n")
+        return
+
+    total = len(quizzes)
+    correct = 0
+    print(f"\n📝 퀴즈를 시작합니다! (총 {total}문제)\n")
+
+    for i, quiz in enumerate(quizzes, 1):
+        quiz.show(i)
+        answer = get_number("정답 입력: ", 1, 4)
+        if quiz.is_correct(answer):
+            print("✅ 정답입니다!\n")
+            correct += 1
+        else:
+            print(f"❌ 오답입니다. 정답은 {quiz.answer}번입니다.\n")
+
+    score = correct * 100 // total
+    print("=" * 40)
+    print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+    print("=" * 40)
+    print()
 
 def main():
+    quizzes = create_default_quizzes()
+
     while True:
         show_menu()
         choice = get_menu_choice()
@@ -88,9 +134,11 @@ def main():
             print("👋 프로그램을 종료합니다.")
             break
 
+        if choice == 1:
+            play_quiz(quizzes)
+            continue
+
         print(f"(준비 중) {choice}번 메뉴를 선택했습니다.\n")
-
-
 
 
 if __name__ == "__main__":
