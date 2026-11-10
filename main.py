@@ -1,3 +1,22 @@
+class Quiz:
+    def __init__(self, question, choices, answer):
+        self.question = question
+        self.choices = choices
+        self.answer = answer
+
+    def show(self, number):
+        print("-" * 40)
+        print(f"[문제 {number}]")
+        print(self.question)
+        print()
+        for i in range(len(self.choices)):
+            print(f"{i + 1}. {self.choices[i]}")
+        print()
+
+    def is_correct(self, user_answer):
+        return user_answer == self.answer
+
+
 def show_menu():
     print("=" * 40)
     print("        🎯 나만의 퀴즈 게임 🎯")
@@ -43,4 +62,7 @@ def main():
         print(f"(준비 중) {choice}번 메뉴를 선택했습니다.\n")
 
 
-main()
+
+
+if __name__ == "__main__":
+    main()
