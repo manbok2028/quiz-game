@@ -122,6 +122,31 @@ def play_quiz(quizzes):
     print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
     print("=" * 40)
     print()
+
+def get_text(prompt):
+    while True:
+        text = input(prompt).strip()
+        if text == "":
+            print("⚠️ 아무것도 입력하지 않았습니다. 내용을 입력하세요.")
+            continue
+        return text
+
+
+def add_quiz(quizzes):
+    print("\n📌 새로운 퀴즈를 추가합니다.\n")
+
+    question = get_text("문제를 입력하세요: ")
+
+    choices = []
+    for i in range(1, 5):
+        choice = get_text(f"선택지 {i}: ")
+        choices.append(choice)
+
+    answer = get_number("정답 번호 (1-4): ", 1, 4)
+
+    quizzes.append(Quiz(question, choices, answer))
+    print("\n✅ 퀴즈가 추가되었습니다!\n")
+
 def list_quizzes(quizzes):
     if len(quizzes) == 0:
         print("⚠️ 등록된 퀴즈가 없습니다.\n")
@@ -133,7 +158,6 @@ def list_quizzes(quizzes):
         print(f"[{i}] {quiz.question}")
     print("-" * 40)
     print()
-
 
 def main():
     quizzes = create_default_quizzes()
@@ -150,8 +174,14 @@ def main():
             play_quiz(quizzes)
             continue
 
+        if choice == 2:
+            add_quiz(quizzes)
+            
+            continue
+
         if choice == 3:
             list_quizzes(quizzes)
+            input("Enter 키를 누르면 메뉴로 돌아갑니다...")
             continue
 
         print(f"(준비 중) {choice}번 메뉴를 선택했습니다.\n")
