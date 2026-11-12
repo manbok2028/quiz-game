@@ -102,3 +102,4 @@ quiz-game/
 - 기능 단위로 커밋하고, `Feat:`, `Refactor:`, `Docs:` 형식의 커밋 메시지를 사용했습니다.
 - 퀴즈 풀기 기능은 `feature/play` 브랜치에서 개발한 뒤 `main`에 병합했습니다.
 - `git log --oneline --graph`로 전체 작업 이력을 확인할 수 있습니다.
+> clone/pull 실습: 복제본에서 추가한 한 줄입니다.
