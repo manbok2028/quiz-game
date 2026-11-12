@@ -291,10 +291,16 @@ class QuizGame:
                 self.show_best_score()
                 input("Enter 키를 누르면 메뉴로 돌아갑니다...")
 
-
 def main():
     game = QuizGame()
-    game.run()
+
+    try:
+        game.run()
+    except (KeyboardInterrupt, EOFError):
+        print("\n\n⚠️ 입력이 중단되었습니다. 프로그램을 안전하게 종료합니다.")
+        game.save_state()
+        print("💾 데이터를 저장했습니다.")
+        print("👋 프로그램을 종료합니다.")
 
 
 if __name__ == "__main__":
